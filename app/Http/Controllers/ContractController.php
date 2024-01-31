@@ -10,9 +10,13 @@ class ContractController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Contract $contract)
     {
-        //
+        $contracts = $contract->all();
+        return response()->json([
+            'success' => true,
+            'data'  => $contracts
+        ]);
     }
 
     /**
@@ -28,7 +32,22 @@ class ContractController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        $contract = $request->only([
+            'contract_rates' ,
+            'start_date' ,
+            'end_date',
+            'accommodation_id',
+            'travel_agent_id'
+        ]);
+
+
+        Contract::create($contract);
+
+        return response()->json([
+            'success'=> true,
+            'message' => 'Contract was captured successfully 🎉'
+        ]);
     }
 
     /**
@@ -52,7 +71,18 @@ class ContractController extends Controller
      */
     public function update(Request $request, Contract $contract)
     {
-        //
+       $contract->update([
+        'contract_rates'  =>$request->input('contract_rates') ,
+        'start_date' =>$request->input('start_date') ,
+        'end_date' => $request->input('end_date'),
+        'accommodation_id' => $request->input('accommodation_id'),
+        'travel_agent_id' => $request->input('travel_agent_id')
+       ]);
+
+       return response()->json([
+        'success'=> true,
+        'message' => 'Contract was updated successfully 🎉'
+       ]);
     }
 
     /**
@@ -60,6 +90,12 @@ class ContractController extends Controller
      */
     public function destroy(Contract $contract)
     {
-        //
+         $contracts = Contract::all();
+       $contract->delete();
+       return response()->json([
+        'sucess'=>true,
+         'data' => $contracts,
+        'message'=>'item deleted successlly 🎉'
+       ]);
     }
 }

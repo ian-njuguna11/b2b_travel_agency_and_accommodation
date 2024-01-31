@@ -224,7 +224,7 @@ onMounted(async () => {
               <img
                 src="../../../assets/logo.png"
                 alt=""
-                class="rounded-full mx-auto absolute -top-20 w-32 h-32 border-4 border-white transition duration-200 transform hover:scale-110"
+                class="roundedmx-auto absolute -top-20 w-32 h-32 border-4 border-white transition duration-200 transform hover:scale-110"
               />
             </div>
 
@@ -263,61 +263,7 @@ onMounted(async () => {
                       alt=""
                       class="rounded-full h-6 shadow-md inline-block mr-2"
                     />
-                    Updated his status
-                    <span class="text-gray-500 text-xs">24 min ago</span>
-                  </a>
-
-                  <a
-                    href="#"
-                    class="w-full border-t border-gray-100 text-gray-600 py-4 pl-6 pr-3 w-full block hover:bg-gray-100 transition duration-150"
-                  >
-                    <img
-                      src="https://avatars0.githubusercontent.com/u/35900628?v=4"
-                      alt=""
-                      class="rounded-full h-6 shadow-md inline-block mr-2"
-                    />
-                    Added new profile picture
-                    <span class="text-gray-500 text-xs">42 min ago</span>
-                  </a>
-
-                  <a
-                    href="#"
-                    class="w-full border-t border-gray-100 text-gray-600 py-4 pl-6 pr-3 w-full block hover:bg-gray-100 transition duration-150"
-                  >
-                    <img
-                      src="https://avatars0.githubusercontent.com/u/35900628?v=4"
-                      alt=""
-                      class="rounded-full h-6 shadow-md inline-block mr-2"
-                    />
-                    Posted new article in
-                    <span class="font-bold">#Web Dev</span>
-                    <span class="text-gray-500 text-xs">49 min ago</span>
-                  </a>
-
-                  <a
-                    href="#"
-                    class="w-full border-t border-gray-100 text-gray-600 py-4 pl-6 pr-3 w-full block hover:bg-gray-100 transition duration-150"
-                  >
-                    <img
-                      src="https://avatars0.githubusercontent.com/u/35900628?v=4"
-                      alt=""
-                      class="rounded-full h-6 shadow-md inline-block mr-2"
-                    />
-                    Edited website settings
-                    <span class="text-gray-500 text-xs">1 day ago</span>
-                  </a>
-
-                  <a
-                    href="#"
-                    class="w-full border-t border-gray-100 text-gray-600 py-4 pl-6 pr-3 w-full block hover:bg-gray-100 transition duration-150 overflow-hidden"
-                  >
-                    <img
-                      src="https://avatars0.githubusercontent.com/u/35900628?v=4"
-                      alt=""
-                      class="rounded-full h-6 shadow-md inline-block mr-2"
-                    />
-                    Added new rank
-                    <span class="text-gray-500 text-xs">5 days ago</span>
+                    NO bookings Yet
                   </a>
                 </div>
               </div>

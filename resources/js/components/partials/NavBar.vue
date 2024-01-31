@@ -13,6 +13,11 @@
         </h6>
       </a>
       <button
+        :class="
+          $route.path == '/dashboard'
+            ? 'bg-gradient-to-tr from-blue-600 to-blue-400'
+            : ''
+        "
         class="middle none font-sans font-medium text-center uppercase transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none w-8 max-w-[32px] h-8 max-h-[32px] rounded-lg text-xs text-white hover:bg-white/10 active:bg-white/30 absolute right-0 top-0 grid rounded-br-none rounded-tl-none xl:hidden"
         type="button"
       >
@@ -47,7 +52,12 @@
             href="#"
           >
             <button
-              class="middle none font-sans font-bold center transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xs py-3 rounded-lg bg-gradient-to-tr from-blue-600 to-blue-400 text-white shadow-md shadow-blue-500/20 hover:shadow-lg hover:shadow-blue-500/40 active:opacity-[0.85] w-full flex items-center gap-4 px-4 capitalize"
+              :class="
+                $route.path == '/dashboard'
+                  ? 'bg-gradient-to-tr from-blue-600 to-blue-400'
+                  : ''
+              "
+              class="middle none font-sans font-bold center transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xs py-3 rounded-lg text-white shadow-md shadow-blue-500/20 hover:shadow-lg hover:shadow-blue-500/40 active:opacity-[0.85] w-full flex items-center gap-4 px-4 capitalize"
               type="button"
             >
               <svg
@@ -79,6 +89,11 @@
             to="/accommodations"
           >
             <button
+              :class="
+                $route.path === '/accommodations'
+                  ? 'bg-gradient-to-tr from-blue-600 to-blue-400'
+                  : ''
+              "
               class="middle none font-sans font-bold center transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xs py-3 rounded-lg text-white hover:bg-white/10 active:bg-white/30 w-full flex items-center gap-4 px-4 capitalize"
               type="button"
             >
@@ -105,8 +120,49 @@
         </li>
 
         <li>
+          <router-link
+            :class="{ active: $route.path === '/contracts' }"
+            to="/contracts"
+          >
+            <button
+              :class="
+                $route.path == '/contracts'
+                  ? 'bg-gradient-to-tr from-blue-600 to-blue-400'
+                  : ''
+              "
+              class="middle none font-sans font-bold center transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xs py-3 rounded-lg text-white hover:bg-white/10 active:bg-white/30 w-full flex items-center gap-4 px-4 capitalize"
+              type="button"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                aria-hidden="true"
+                class="w-5 h-5 text-inherit"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M1.5 5.625c0-1.036.84-1.875 1.875-1.875h17.25c1.035 0 1.875.84 1.875 1.875v12.75c0 1.035-.84 1.875-1.875 1.875H3.375A1.875 1.875 0 011.5 18.375V5.625zM21 9.375A.375.375 0 0020.625 9h-7.5a.375.375 0 00-.375.375v1.5c0 .207.168.375.375.375h7.5a.375.375 0 00.375-.375v-1.5zm0 3.75a.375.375 0 00-.375-.375h-7.5a.375.375 0 00-.375.375v1.5c0 .207.168.375.375.375h7.5a.375.375 0 00.375-.375v-1.5zm0 3.75a.375.375 0 00-.375-.375h-7.5a.375.375 0 00-.375.375v1.5c0 .207.168.375.375.375h7.5a.375.375 0 00.375-.375v-1.5zM10.875 18.75a.375.375 0 00.375-.375v-1.5a.375.375 0 00-.375-.375h-7.5a.375.375 0 00-.375.375v1.5c0 .207.168.375.375.375h7.5zM3.375 15h7.5a.375.375 0 00.375-.375v-1.5a.375.375 0 00-.375-.375h-7.5a.375.375 0 00-.375.375v1.5c0 .207.168.375.375.375zm0-3.75h7.5a.375.375 0 00.375-.375v-1.5A.375.375 0 0010.875 9h-7.5A.375.375 0 003 9.375v1.5c0 .207.168.375.375.375z"
+                  clip-rule="evenodd"
+                ></path>
+              </svg>
+              <p
+                class="block antialiased font-sans text-base leading-relaxed text-inherit font-medium capitalize"
+              >
+                Contracts
+              </p>
+            </button>
+          </router-link>
+        </li>
+
+        <li>
           <router-link to="/profile" class="" href="#">
             <button
+              :class="
+                $route.path == '/profile'
+                  ? 'bg-gradient-to-tr from-blue-600 to-blue-400'
+                  : ''
+              "
               class="middle none font-sans font-bold center transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xs py-3 rounded-lg text-white hover:bg-white/10 active:bg-white/30 w-full flex items-center gap-4 px-4 capitalize"
               type="button"
             >
@@ -141,8 +197,14 @@
           </p>
         </li>
         <li>
-          <a class="" href="#">
+          <router-link to="/login" class="" href="#">
             <button
+              @click="logOut"
+              :class="
+                $route.path == '/login'
+                  ? 'bg-gradient-to-tr from-blue-600 to-blue-400'
+                  : ''
+              "
               class="middle none font-sans font-bold center transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xs py-3 rounded-lg text-white hover:bg-white/10 active:bg-white/30 w-full flex items-center gap-4 px-4 capitalize"
               type="button"
             >
@@ -162,37 +224,25 @@
               <p
                 class="block antialiased font-sans text-base leading-relaxed text-inherit font-medium capitalize"
               >
-                sign in
+                sign out
               </p>
             </button>
-          </a>
-        </li>
-        <li>
-          <a class="" href="#">
-            <button
-              class="middle none font-sans font-bold center transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xs py-3 rounded-lg text-white hover:bg-white/10 active:bg-white/30 w-full flex items-center gap-4 px-4 capitalize"
-              type="button"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                fill="currentColor"
-                aria-hidden="true"
-                class="w-5 h-5 text-inherit"
-              >
-                <path
-                  d="M6.25 6.375a4.125 4.125 0 118.25 0 4.125 4.125 0 01-8.25 0zM3.25 19.125a7.125 7.125 0 0114.25 0v.003l-.001.119a.75.75 0 01-.363.63 13.067 13.067 0 01-6.761 1.873c-2.472 0-4.786-.684-6.76-1.873a.75.75 0 01-.364-.63l-.001-.122zM19.75 7.5a.75.75 0 00-1.5 0v2.25H16a.75.75 0 000 1.5h2.25v2.25a.75.75 0 001.5 0v-2.25H22a.75.75 0 000-1.5h-2.25V7.5z"
-                ></path>
-              </svg>
-              <p
-                class="block antialiased font-sans text-base leading-relaxed text-inherit font-medium capitalize"
-              >
-                sign up
-              </p>
-            </button>
-          </a>
+          </router-link>
         </li>
       </ul>
+    </div>
+
+    <div
+      class="middle none font-sans font-bold center transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xs py-3 my-20 ml-6 rounded-lg text-white hover:bg-white/10 active:bg-white/30 w-full flex items-center gap-4 px-4 capitalize"
+    >
+      <p
+        class="block antialiased font-sans text-sm leading-normal font-bold text-white uppercase"
+      >
+        Ian
+        <span class="bg-green-600 rounded p-2 text-white uppercase font-bold"
+          >njuguna</span
+        >
+      </p>
     </div>
   </aside>
 </template>

@@ -6,38 +6,44 @@ import Navbar from "@/components/partials/NavBar.vue";
 
 // Define reactive variables
 let user = ref([]);
+let contracts = ref([]);
+let accommodations = ref([]);
 
 let error = ref(null); // Assuming error is also reactive
 let message = ref(null); // Assuming error is also reactive
 let isEditState = ref(false);
 
+let travelAgents = ref([]);
+
 let form = reactive({
   id: "",
-  name: "",
-  description: "",
-  standard_rack_rate: "",
+  contract_rates: "",
+  start_date: "",
+  end_date: "",
+  accommodation_id: "",
+  travel_agent_id: "",
 });
-
-let accommodations = ref([]);
 
 // Define your bearer token
 const bearerToken = localStorage.getItem("token");
 
-const addAccommodation = async () => {
-  await axios.post("/api/accommodations", form).then(async (response) => {
+const addContract = async () => {
+  await axios.post("/api/contract", form).then(async (response) => {
     if (response.data.success) {
       message.value = response.data.message;
 
       // fectch all new data
       try {
-        const response = await axios.get("/api/accommodation/list", {
+        const response = await axios.get("/api/contract/list", {
           headers: {
             Authorization: `Bearer ${bearerToken}`, // Include bearer token in request headers
           },
         }); // Assuming form is defined somewhere
 
         if (response.status == 200) {
-          accommodations.value = response.data.data;
+          console.log("Contracts ................");
+          console.log(response.data.data);
+          contracts.value = response.data.data;
         } else {
           error.value = response.data.message;
         }
@@ -50,23 +56,23 @@ const addAccommodation = async () => {
   });
 };
 
-const updateAccommodation = async () => {
+const updateContract = async () => {
   await axios
-    .put("api/accommodation/update/" + form.id, form)
+    .put("api/contract/update/" + form.id, form)
     .then(async (response) => {
       if (response.data.success) {
         message.value = response.data.message;
 
         // fectch all new data
         try {
-          const response = await axios.get("/api/accommodation/list", {
+          const response = await axios.get("/api/contract/list", {
             headers: {
               Authorization: `Bearer ${bearerToken}`, // Include bearer token in request headers
             },
           }); // Assuming form is defined somewhere
 
           if (response.status == 200) {
-            accommodations.value = response.data.data;
+            contracts.value = response.data.data;
           } else {
             error.value = response.data.message;
           }
@@ -91,36 +97,25 @@ const editItem = async (item) => {
   isEditState.value = true;
 
   form.id = item.id;
-  form.name = item.name;
-  form.description = item.description;
-  form.standard_rack_rate = item.standard_rack_rate;
+  form.contract_rates = item.contract_rates;
+  form.start_date = item.start_date;
+  form.end_date = item.end_date;
+  form.accommodation_id = item.accommodation_id;
+  form.travel_agent_id = item.travel_agent_id;
 };
 
 const deleteItem = async (item) => {
   await axios
-    .delete("api/destroy/accommodation/" + item.id)
+    .delete("api/destroy/contract/" + item.id)
     .then(async (response) => {
       if (response.data.success) {
         message.value = response.data.message;
+        contracts.value = response.data.data;
 
-        // fectch all new data
-        try {
-          const response = await axios.get("/api/accommodation/list", {
-            headers: {
-              Authorization: `Bearer ${bearerToken}`, // Include bearer token in request headers
-            },
-          }); // Assuming form is defined somewhere
-
-          if (response.status == 200) {
-            accommodations.value = response.data.data;
-          } else {
-            error.value = response.data.message;
-          }
-        } catch (err) {
-          error.value = err.message;
-        }
+        console.log(contracts.value);
       } else {
         error.value = response.data.message;
+        console.log(response.data.message);
       }
     });
 };
@@ -142,7 +137,44 @@ onMounted(async () => {
   } catch (err) {
     error.value = err.message;
   }
+
+  //travel agents
+  try {
+    const response = await axios.get("/api/users/list", {
+      headers: {
+        Authorization: `Bearer ${bearerToken}`,
+      },
+    }); // Assuming form is defined somewhere
+
+    if (response.status == 200) {
+      travelAgents.value = response.data.data;
+    } else {
+      error.value = response.data.message;
+    }
+  } catch (err) {
+    error.value = err.message;
+  }
+
+  //contracts
+  // fectch all new data
+  try {
+    const response = await axios.get("/api/contract/list", {
+      headers: {
+        Authorization: `Bearer ${bearerToken}`, // Include bearer token in request headers
+      },
+    }); // Assuming form is defined somewhere
+
+    if (response.status == 200) {
+      contracts.value = response.data.data;
+    } else {
+      error.value = response.data.message;
+    }
+  } catch (err) {
+    error.value = err.message;
+  }
 });
+
+// travelAgent
 </script>
 
 <template>
@@ -393,9 +425,7 @@ onMounted(async () => {
                 <div class="bg-white relative rounded-lg p-8 sm:p-12">
                   <form
                     @submit.prevent="
-                      `${
-                        isEditState ? updateAccommodation() : addAccommodation()
-                      }`
+                      `${isEditState ? updateContract() : addContract()}`
                     "
                     class="space-y-6"
                     method="POST"
@@ -404,15 +434,15 @@ onMounted(async () => {
                       <label
                         for="name"
                         class="block text-sm font-medium leading-6 text-gray-900"
-                        >Name</label
+                        >Contract Rates</label
                       >
                       <div class="mt-2">
                         <input
-                          v-model="form.name"
-                          id="name"
-                          name="name"
-                          type="name"
-                          autocomplete="name"
+                          v-model="form.contract_rates"
+                          id="contract_rates"
+                          name="contract_rates"
+                          type="number"
+                          autocomplete="contract_rates"
                           required
                           class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                         />
@@ -424,16 +454,16 @@ onMounted(async () => {
                         <label
                           for="description"
                           class="block text-sm font-medium leading-6 text-gray-900"
-                          >Description</label
+                          >Start Date</label
                         >
                       </div>
                       <div class="mt-2">
                         <input
-                          v-model="form.description"
-                          id="description"
-                          name="description"
-                          type="textarea"
-                          autocomplete="description"
+                          v-model="form.start_date"
+                          id="start_date"
+                          name="start_date"
+                          type="date"
+                          autocomplete="start_date"
                           required
                           class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                         />
@@ -443,21 +473,96 @@ onMounted(async () => {
                     <div>
                       <div class="flex items-center justify-between">
                         <label
-                          for="standard_rack_rate"
+                          for="description"
                           class="block text-sm font-medium leading-6 text-gray-900"
-                          >Standard Rack Rate</label
+                          >End Date</label
                         >
                       </div>
                       <div class="mt-2">
                         <input
-                          v-model="form.standard_rack_rate"
-                          id="standard_rack_rate"
-                          name="standard_rack_rate"
-                          type="number"
-                          autocomplete="standard_rack_rate"
+                          v-model="form.end_date"
+                          id="end_date"
+                          name="end_date"
+                          type="date"
+                          autocomplete="end_date"
                           required
                           class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                         />
+                      </div>
+                    </div>
+
+                    <div>
+                      <div class="flex items-center justify-between">
+                        <label
+                          for="accommodation_id"
+                          class="block text-sm font-medium leading-6 text-gray-900"
+                          >Accommodation</label
+                        >
+                      </div>
+                      <div class="mt-2">
+                        <select
+                          v-model="form.accommodation_id"
+                          id="accommodation_id"
+                          name="accommodation_id"
+                          autocomplete="accommodation_id"
+                          required
+                          class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                        >
+                          <option value="">
+                            Please select an accommodation
+                          </option>
+                          <option
+                            v-for="accommodation in accommodations"
+                            :key="accommodation.id"
+                            :value="
+                              isEditState
+                                ? form.accommodation_id
+                                : accommodation.id
+                            "
+                            class="hover:bg-indigo-600"
+                          >
+                            {{ accommodation.name }}
+                            ${{ accommodation.standard_rack_rate }}
+                          </option>
+                        </select>
+                      </div>
+                    </div>
+
+                    <div>
+                      <div class="flex items-center justify-between">
+                        <label
+                          for="accommodation_id"
+                          class="block text-sm font-medium leading-6 text-gray-900"
+                          >Travel Agent</label
+                        >
+                      </div>
+                      <div class="mt-2">
+                        <select
+                          v-model="form.travel_agent_id"
+                          id="travel_agent_id"
+                          name="travel_agent_id"
+                          autocomplete="travel_agent_id"
+                          required
+                          class="block w-full rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                        >
+                          <option value="">Please choose a travel agent</option>
+                          <option
+                            v-for="travelAgent in travelAgents"
+                            :key="travelAgent.id"
+                            :value="
+                              isEditState
+                                ? form.travel_agent_id
+                                : travelAgent.id
+                            "
+                            class="hover:bg-indigo-600"
+                          >
+                            {{ travelAgent.id }}
+                            {{ travelAgent.name }}
+                            <span class="bg-indigo-500 text-white text-sm"
+                              >({{ travelAgent.email }})</span
+                            >
+                          </option>
+                        </select>
                       </div>
                     </div>
 
@@ -466,7 +571,7 @@ onMounted(async () => {
                         type="submit"
                         class="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                       >
-                        {{ isEditState ? "Update" : "Add" }} accommodation
+                        {{ isEditState ? "Update" : "Add" }} Contract
                       </button>
                     </div>
                   </form>
@@ -481,17 +586,27 @@ onMounted(async () => {
                         <th
                           class="px-8 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                         >
-                          Name
+                          Contract Rates
                         </th>
                         <th
                           class="px-8 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                         >
-                          Description
+                          start_date
                         </th>
                         <th
                           class="px-8 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                         >
-                          Rack Rate
+                          end_date
+                        </th>
+                        <th
+                          class="px-8 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                        >
+                          accommodation
+                        </th>
+                        <th
+                          class="px-8 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                        >
+                          travel_agent
                         </th>
                         <th
                           class="px-10 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
@@ -501,19 +616,25 @@ onMounted(async () => {
                       </tr>
                     </thead>
                     <tbody
-                      v-if="accommodations.length > 0"
+                      v-if="contracts.length > 0"
                       class="bg-white divide-y divide-gray-200"
                     >
                       <!-- Use v-for to loop over items -->
-                      <tr v-for="item in accommodations" :key="item.id">
+                      <tr v-for="item in contracts" :key="item.id">
                         <td class="px-8 py-4 whitespace-nowrap">
-                          {{ item.name }}
+                          {{ item.contract_rates }}
                         </td>
                         <td class="px-8 py-4 whitespace-nowrap">
-                          {{ item.description }}
+                          {{ item.start_date }}
                         </td>
                         <td class="px-8 py-4 whitespace-nowrap">
-                          {{ item.standard_rack_rate }}
+                          {{ item.end_date }}
+                        </td>
+                        <td class="px-8 py-4 whitespace-nowrap">
+                          {{ item.accommodation_id }}
+                        </td>
+                        <td class="px-8 py-4 whitespace-nowrap">
+                          {{ item.travel_agent_id }}
                         </td>
                         <td class="px-10 py-4 whitespace-nowrap">
                           <button
@@ -533,7 +654,7 @@ onMounted(async () => {
                     </tbody>
                   </table>
                   <div
-                    v-if="accommodations.length == 0"
+                    v-if="contracts.length == 0"
                     class="text-indigo-600 hover:text-indigo-900 mx-40 mt-20"
                   >
                     <img
@@ -541,7 +662,7 @@ onMounted(async () => {
                       alt=""
                       class="h-25"
                     />
-                    No Accommodations Avaible
+                    <span class="ml-20"> No contracts Avaible</span>
                   </div>
                 </div>
               </div>

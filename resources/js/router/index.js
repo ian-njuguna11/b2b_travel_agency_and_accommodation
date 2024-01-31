@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router';
 
 import accommodations from '../components/pages/accommodations.vue';
+import contracts from '../components/pages/contracts.vue';
 import dashboard from '../components/pages/dashboard.vue';
 import login from '../components/pages/login.vue';
 import notFound from '../components/pages/notFound.vue';
@@ -29,6 +30,10 @@ const routes = [
     {
         path: '/accommodations',
         component: accommodations
+    },
+     {
+        path: '/contracts',
+        component: contracts
     },
     //notfound
     {

@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\AccommodationController;
 use App\Http\Controllers\API\AuthController;
+use App\Http\Controllers\ContractController;
+use App\Http\Controllers\UsersController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -20,9 +22,19 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::get('users/list', [UsersController::class, 'index']);
+
 Route::post('register', [AuthController::class, 'register']);
 Route::post('login', [AuthController::class, 'login']);
 
+// contracts
+Route::post('contract', [ContractController::class, 'store']);
+Route::get('contract/list', [ContractController::class,'index']);
+Route::put('contract/update/{contract}', [ContractController::class,'update']);
+Route::delete('destroy/contract/{contract}', [ContractController::class,'destroy']);
+//
+
+//accommodations
 Route::put('accommodation/update/{accommodation}', [AccommodationController::class,'update']);
 Route::delete('destroy/accommodation/{accommodation}', [AccommodationController::class,'destroy']);
 Route::post('accommodations', [AccommodationController::class,'store']);
