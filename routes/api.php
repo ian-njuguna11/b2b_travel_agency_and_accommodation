@@ -4,6 +4,9 @@ use App\Http\Controllers\AccommodationController;
 use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\ContractController;
 use App\Http\Controllers\UsersController;
+use App\Models\Accommodation;
+use App\Models\Contract;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -26,6 +29,21 @@ Route::get('users/list', [UsersController::class, 'index']);
 
 Route::post('register', [AuthController::class, 'register']);
 Route::post('login', [AuthController::class, 'login']);
+
+//dashboard
+Route::get('accommodation/count', function(){
+    return count(Accommodation::all());
+});
+
+Route::get('contract/count', function(){
+    return count(Contract::all());
+});
+
+Route::get('travel_agents/count', function(User $user){
+
+    return count($user->all());
+
+});
 
 // contracts
 Route::post('contract', [ContractController::class, 'store']);

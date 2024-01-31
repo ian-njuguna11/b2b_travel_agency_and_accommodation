@@ -1,5 +1,70 @@
 
+<script setup >
+import { onMounted, reactive, ref } from "vue";
 
+let accommodation = ref("");
+let contract = ref("");
+let travel_agent = ref("");
+let bearerToken = ref("");
+
+// Define mounted hook
+onMounted(async () => {
+  console.log(">>>>>>>>>>>>>>>> mounted");
+  try {
+    const response = await axios.get("/api/accommodation/count", {
+      headers: {
+        Authorization: `Bearer ${bearerToken}`,
+      },
+    }); // Assuming form is defined somewhere
+
+    if (response.status == 200) {
+      console.log(response.data);
+      accommodation.value = response.data;
+    } else {
+      console.log(response.data);
+      error.value = response.data.message;
+    }
+  } catch (err) {
+    console.log(err.message);
+    error.value = err.message;
+  }
+
+  //travel agents
+  try {
+    const response = await axios.get("/api/contract/count", {
+      headers: {
+        Authorization: `Bearer ${bearerToken}`,
+      },
+    }); // Assuming form is defined somewhere
+
+    if (response.status == 200) {
+      contract.value = response.data;
+    } else {
+      error.value = response.data.message;
+    }
+  } catch (err) {
+    error.value = err.message;
+  }
+
+  //contracts
+  // fectch all new data
+  try {
+    const response = await axios.get("/api/travel_agents/count", {
+      headers: {
+        Authorization: `Bearer ${bearerToken}`, // Include bearer token in request headers
+      },
+    }); // Assuming form is defined somewhere
+
+    if (response.status == 200) {
+      travel_agent.value = response.data;
+    } else {
+      error.value = response.data.message;
+    }
+  } catch (err) {
+    error.value = err.message;
+  }
+});
+</script>
 <template>
   <div class="min-h-screen bg-gray-50/50">
     <!-- //side nav -->
@@ -180,6 +245,7 @@
           </div>
         </div>
       </nav>
+
       <div class="mt-12">
         <div class="mb-12 grid gap-y-10 gap-x-6 md:grid-cols-2 xl:grid-cols-4">
           <div
@@ -212,12 +278,12 @@
               <p
                 class="block antialiased font-sans text-sm leading-normal font-normal text-blue-gray-600"
               >
-                Today's Money
+                Accommodations
               </p>
               <h4
                 class="block antialiased tracking-normal font-sans text-2xl font-semibold leading-snug text-blue-gray-900"
               >
-                $53k
+                {{ accommodation }}
               </h4>
             </div>
             <div class="border-t border-blue-gray-50 p-4">
@@ -252,12 +318,12 @@
               <p
                 class="block antialiased font-sans text-sm leading-normal font-normal text-blue-gray-600"
               >
-                Today's Users
+                Contracts
               </p>
               <h4
                 class="block antialiased tracking-normal font-sans text-2xl font-semibold leading-snug text-blue-gray-900"
               >
-                2,300
+                {{ contract }}
               </h4>
             </div>
             <div class="border-t border-blue-gray-50 p-4">
@@ -290,12 +356,12 @@
               <p
                 class="block antialiased font-sans text-sm leading-normal font-normal text-blue-gray-600"
               >
-                New Clients
+                Travel Agents
               </p>
               <h4
                 class="block antialiased tracking-normal font-sans text-2xl font-semibold leading-snug text-blue-gray-900"
               >
-                3,462
+                {{ travel_agent }}
               </h4>
             </div>
             <div class="border-t border-blue-gray-50 p-4">
@@ -328,12 +394,12 @@
               <p
                 class="block antialiased font-sans text-sm leading-normal font-normal text-blue-gray-600"
               >
-                Sales
+                Revenue
               </p>
               <h4
                 class="block antialiased tracking-normal font-sans text-2xl font-semibold leading-snug text-blue-gray-900"
               >
-                $103,430
+                kes 120,000
               </h4>
             </div>
             <div class="border-t border-blue-gray-50 p-4">
@@ -345,7 +411,7 @@
             </div>
           </div>
         </div>
-
+        <!-- 
         <div class="mb-4 grid grid-cols-1 gap-6 xl:grid-cols-3">
           <div
             class="relative flex flex-col bg-clip-border rounded-xl bg-white text-gray-700 shadow-md overflow-hidden xl:col-span-2"
@@ -622,7 +688,7 @@
               </table>
             </div>
           </div>
-        </div>
+        </div> -->
       </div>
       <div class="text-blue-gray-600">
         <footer class="py-2">
@@ -634,40 +700,6 @@
             >
               © 2023
             </p>
-            <ul class="flex items-center gap-4">
-              <li>
-                <a
-                  href="https://www.creative-tim.com"
-                  target="_blank"
-                  class="block antialiased font-sans text-sm leading-normal py-0.5 px-1 font-normal text-inherit transition-colors hover:text-blue-500"
-                  >Creative Tim</a
-                >
-              </li>
-              <li>
-                <a
-                  href="https://www.creative-tim.com/presentation"
-                  target="_blank"
-                  class="block antialiased font-sans text-sm leading-normal py-0.5 px-1 font-normal text-inherit transition-colors hover:text-blue-500"
-                  >About Us</a
-                >
-              </li>
-              <li>
-                <a
-                  href="https://www.creative-tim.com/blog"
-                  target="_blank"
-                  class="block antialiased font-sans text-sm leading-normal py-0.5 px-1 font-normal text-inherit transition-colors hover:text-blue-500"
-                  >Blog</a
-                >
-              </li>
-              <li>
-                <a
-                  href="https://www.creative-tim.com/license"
-                  target="_blank"
-                  class="block antialiased font-sans text-sm leading-normal py-0.5 px-1 font-normal text-inherit transition-colors hover:text-blue-500"
-                  >License</a
-                >
-              </li>
-            </ul>
           </div>
         </footer>
       </div>
@@ -678,6 +710,7 @@
 
 <script>
 import Navbar from "@/components/partials/NavBar.vue"; // Adjust the path as needed
+import { reactive } from "vue";
 
 export default {
   components: {
