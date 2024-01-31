@@ -13,22 +13,24 @@ Table of Contents
 
 Introduction
 
-    ![screenshot1](login.png)
-    ![screenshot1](Register.png)
+![screenshot1](login.png)
+![screenshot1](Register.png)
 
 Installation
  
 Please note i used yarn package manage to spin up this project. For some reason npm has legacy peer dependecy issues.
 
-    ```cd project```
-    ```composer install```
-    ```php artisan migrate```
-    ```yarn```
-    ```yarn dev```
+```cd project```
+```composer install```
+```php artisan migrate```
+```yarn```
+```yarn dev```
 
-Access project at ``127.0.0.1:8000```
+Access project at 
 
-    >>> Make sure to Register a travel agent first.
+```127.0.0.1:8000```
+
+>>> Make sure to Register a travel agent first.
 
 
 php
