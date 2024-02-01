@@ -32,7 +32,7 @@ const login = async () => {
   <div class="pt-10 flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
     <div class="sm:mx-auto sm:w-full sm:max-w-sm">
       <img
-        class="mx-auto h-10 w-[500px] h-[250px]"
+        class="h-10 w-[500px] h-[250px] hover:transform hover:-translate-y-2 transition duration-300"
         src="../../../assets/logo.png"
         alt="Your Company"
       />
@@ -125,3 +125,19 @@ const login = async () => {
     </div>
   </div>
 </template>
+
+<style scoped>
+@keyframes levitate {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(
+      -10px
+    ); /* Adjust the value for desired levitation height */
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+</style>

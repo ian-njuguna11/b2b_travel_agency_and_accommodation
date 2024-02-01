@@ -17,4 +17,6 @@ Route::get('/', function () {
     return view('index');
 });
 
-Route::get('/{pathMatch}', function(){ return view('index'); })->where('pathMatch', ".*");
+Route::get('/{pathMatch}', function(){ 
+    return view('index'); 
+})->where('pathMatch', ".*");

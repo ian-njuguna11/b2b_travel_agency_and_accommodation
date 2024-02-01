@@ -9,6 +9,10 @@ import profile from '../components/pages/profile.vue';
 import register from '../components/pages/register.vue';
 
 const routes = [
+    {
+        path: '/',
+        component: login
+    },
     //login
     {
         path: '/login',
