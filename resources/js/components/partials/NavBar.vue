@@ -248,8 +248,12 @@
 </template>
 
 
-<script >
-export default {
-  name: "Navbar",
+<script setup>
+import { useRouter } from "vue-router";
+
+const router = useRouter();
+
+const logOut = () => {
+  localStorage.removeItem("token");
 };
 </script>

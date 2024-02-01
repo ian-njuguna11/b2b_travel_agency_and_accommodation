@@ -11,46 +11,92 @@ import register from '../components/pages/register.vue';
 const routes = [
     {
         path: '/',
-        component: login
+        component: login,
+        meta: {
+            requiresAuth: false
+        }
     },
     //login
     {
         path: '/login',
-        component: login
+        name: 'Login',
+        component: login,
+        meta: {
+            requiresAuth: false
+        }
     },
      //register
     {
         path: '/register',
-        component: register
+        name: 'Register',
+        component: register,
+        meta: {
+            requiresAuth: false
+        }
     },
-     {
+    {
         path: '/dashboard',
-        component: dashboard
+        name: 'Dashboard',
+        component: dashboard,
+        meta: {
+            requiresAuth: true
+        }
     },
     {
         path: '/profile',
-        component: profile
+        name: 'Profile',
+        component: profile,
+        meta: {
+            requiresAuth: true
+        }
     },
     {
         path: '/accommodations',
-        component: accommodations
+        name: 'Accommodations',
+        component: accommodations,
+        meta: {
+            requiresAuth: true
+        }
     },
      {
         path: '/contracts',
-        component: contracts
+        name: 'Contracts',
+        component: contracts,
+        meta: {
+            requiresAuth: true
+        }
     },
     //notfound
     {
         path: '/:pathMatch(.*)*',
-        component: notFound
+        name: 'NotFound',
+        component: notFound,
+        meta: {
+            requiresAuth: true
+        }
     }
 ]
-
 
 const router = createRouter({
     history: createWebHistory(),
     routes
 });
+
+
+router.beforeEach((to) => {
+    // to and from are both route objects. must call `next`.
+
+    if (to.meta.requiresAuth && !localStorage.getItem('token')) {
+        return { name: 'Login' }
+    }
+
+    if (to.meta.requiresAuth == false && localStorage.getItem('token')) {
+        return { name: 'Dashboard' }
+    }
+
+})
+
+
 
 
 export default router;
