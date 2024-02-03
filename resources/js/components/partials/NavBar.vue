@@ -15,7 +15,7 @@
       <button
         :class="
           $route.path == '/dashboard'
-            ? 'bg-gradient-to-tr from-blue-600 to-blue-400'
+            ? 'bg-gradient-to-tr from-indigo-600 to-indigo-400'
             : ''
         "
         class="middle none font-sans font-medium text-center uppercase transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none w-8 max-w-[32px] h-8 max-h-[32px] rounded-lg text-xs text-white hover:bg-white/10 active:bg-white/30 absolute right-0 top-0 grid rounded-br-none rounded-tl-none xl:hidden"
@@ -54,7 +54,7 @@
             <button
               :class="
                 $route.path == '/dashboard'
-                  ? 'bg-gradient-to-tr from-blue-600 to-blue-400'
+                  ? 'bg-gradient-to-tr from-indigo-600 to-indigo-400'
                   : ''
               "
               class="middle none font-sans font-bold center transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xs py-3 rounded-lg text-white shadow-md shadow-blue-500/20 hover:shadow-lg hover:shadow-blue-500/40 active:opacity-[0.85] w-full flex items-center gap-4 px-4 capitalize"
@@ -91,7 +91,7 @@
             <button
               :class="
                 $route.path === '/accommodations'
-                  ? 'bg-gradient-to-tr from-blue-600 to-blue-400'
+                  ? 'bg-gradient-to-tr from-indigo-600 to-indigo-400'
                   : ''
               "
               class="middle none font-sans font-bold center transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xs py-3 rounded-lg text-white hover:bg-white/10 active:bg-white/30 w-full flex items-center gap-4 px-4 capitalize"
@@ -127,7 +127,7 @@
             <button
               :class="
                 $route.path == '/contracts'
-                  ? 'bg-gradient-to-tr from-blue-600 to-blue-400'
+                  ? 'bg-gradient-to-tr from-indigo-600 to-indigo-400'
                   : ''
               "
               class="middle none font-sans font-bold center transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xs py-3 rounded-lg text-white hover:bg-white/10 active:bg-white/30 w-full flex items-center gap-4 px-4 capitalize"
@@ -160,7 +160,7 @@
             <button
               :class="
                 $route.path == '/profile'
-                  ? 'bg-gradient-to-tr from-blue-600 to-blue-400'
+                  ? 'bg-gradient-to-tr from-indigo-600 to-indigo-400'
                   : ''
               "
               class="middle none font-sans font-bold center transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xs py-3 rounded-lg text-white hover:bg-white/10 active:bg-white/30 w-full flex items-center gap-4 px-4 capitalize"
@@ -202,7 +202,7 @@
               @click="logOut"
               :class="
                 $route.path == '/login'
-                  ? 'bg-gradient-to-tr from-blue-600 to-blue-400'
+                  ? 'bg-gradient-to-tr from-indigo-600 to-indigo-400'
                   : ''
               "
               class="middle none font-sans font-bold center transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xs py-3 rounded-lg text-white hover:bg-white/10 active:bg-white/30 w-full flex items-center gap-4 px-4 capitalize"

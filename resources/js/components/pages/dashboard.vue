@@ -1,6 +1,9 @@
 
 <script setup >
 import { onMounted, reactive, ref } from "vue";
+import { useStore } from "vuex";
+
+const store = useStore();
 
 let accommodation = ref("");
 let contract = ref("");
@@ -153,8 +156,9 @@ onMounted(async () => {
               </span>
             </button>
             <a href="#">
-              <button
-                class="middle none font-sans font-bold center uppercase transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xs py-3 rounded-lg text-gray-500 hover:bg-blue-gray-500/10 active:bg-blue-gray-500/30 hidden items-center gap-1 px-4 xl:flex"
+              <router-link
+                :to="store.getters.isLoggedIn ? '/login' : '/profile'"
+                class="middle none font-sans font-bold center uppercase transition-all disabled:opacity-50 text-xs py-3 rounded-lg text-gray-500 hover:bg-gray-500/10 hover:bg-blue-gray-500/10 active:bg-blue-gray-500/30 hidden items-center gap-1 px-4 xl:flex"
                 type="button"
               >
                 <svg
@@ -170,8 +174,8 @@ onMounted(async () => {
                     clip-rule="evenodd"
                   ></path>
                 </svg>
-                >Sign In
-              </button>
+                {{ store.getters.isLoggedIn ? "Profile" : "Sign In" }}
+              </router-link>
               <button
                 class="relative middle none font-sans font-medium text-center uppercase transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none w-10 max-w-[40px] h-10 max-h-[40px] rounded-lg text-xs text-gray-500 hover:bg-blue-gray-500/10 active:bg-blue-gray-500/30 grid xl:hidden"
                 type="button"

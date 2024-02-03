@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router';
+import { createStore } from 'vuex';
 
 import accommodations from '../components/pages/accommodations.vue';
 import contracts from '../components/pages/contracts.vue';
@@ -7,6 +8,10 @@ import login from '../components/pages/login.vue';
 import notFound from '../components/pages/notFound.vue';
 import profile from '../components/pages/profile.vue';
 import register from '../components/pages/register.vue';
+
+
+
+const store = createStore();
 
 const routes = [
     {
@@ -86,7 +91,7 @@ const router = createRouter({
 router.beforeEach((to) => {
     // to and from are both route objects. must call `next`.
 
-    if (to.meta.requiresAuth && !localStorage.getItem('token')) {
+    if (to.meta.requiresAuth &&  !localStorage.getItem('token')) {
         return { name: 'Login' }
     }
 
@@ -95,8 +100,6 @@ router.beforeEach((to) => {
     }
 
 })
-
-
 
 
 export default router;
