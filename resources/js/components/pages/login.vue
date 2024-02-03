@@ -1,11 +1,16 @@
 <script setup>
-import { reactive, ref } from "vue";
+import { computed, reactive, ref } from "vue";
 import { useRouter } from "vue-router";
+
+import { useStore, mapGetters } from "vuex";
+
+const store = useStore();
 
 const router = useRouter();
 
 let error = ref("");
 let message = ref("");
+let token = ref("");
 
 let form = reactive({
   email: "",
@@ -13,14 +18,18 @@ let form = reactive({
 });
 
 const login = async () => {
+  console.log("store.getters >>>>>>>>>>>>>>>>>>");
+  console.log(store.getters.getToken);
+
   await axios.post("/api/login", form).then((response) => {
     if (response.data.success) {
       localStorage.setItem("token", response.data.data.token);
+      store.dispatch("auth/setToken", response.data.data.token);
       message.value = response.data.message;
 
       setTimeout(() => {
         router.push("/dashboard");
-      }, 1500);
+      }, 1000);
     } else {
       error.value = response.data.message;
     }
@@ -44,6 +53,7 @@ const login = async () => {
       <h4 class="text-center font-medium tracking-tight text-indigo-600">
         & start booking trips
       </h4>
+      {{ token }}
     </div>
 
     <div
