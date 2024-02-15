@@ -72,10 +72,18 @@ class AuthController extends Controller
 
             return response()->json($response, 200);
 
+        }else{
+            $response = [
+                'success' => false,
+                'message' => 'Login unsuccessful email or password was wrong.'
+            ];
+
+            return response()->json($response, 200);
+
         }
 
     }
 
-    
+
 
 }

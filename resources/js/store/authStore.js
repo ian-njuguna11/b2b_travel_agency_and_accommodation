@@ -1,12 +1,12 @@
 // authStore.js
 const state = {
-  token: localStorage.getItem('token') || null
+    token: localStorage.getItem('token') || null,
 };
 
 const mutations = {
     UPDATE_TOKEN(state, payload) {
         state.token = payload
-    }
+    },
 };
 
 const actions = {

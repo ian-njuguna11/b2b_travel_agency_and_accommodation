@@ -13,10 +13,16 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+
+Route::get('/login', function () {
+    return view('Auth.login');
+});
+
+
 Route::get('/', function () {
     return view('index');
 });
 
-Route::get('/{pathMatch}', function(){ 
-    return view('index'); 
+Route::get('/{pathMatch}', function(){
+    return view('index');
 })->where('pathMatch', ".*");

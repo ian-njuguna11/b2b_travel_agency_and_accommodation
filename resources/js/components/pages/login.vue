@@ -1,8 +1,8 @@
 <script setup>
-import { computed, reactive, ref } from "vue";
+import { reactive, ref } from "vue";
 import { useRouter } from "vue-router";
 
-import { useStore, mapGetters } from "vuex";
+import { useStore } from "vuex";
 
 const store = useStore();
 
@@ -11,6 +11,7 @@ const router = useRouter();
 let error = ref("");
 let message = ref("");
 let token = ref("");
+let loading = ref(false);
 
 let form = reactive({
   email: "",
@@ -18,20 +19,28 @@ let form = reactive({
 });
 
 const login = async () => {
+  loading.value = true;
   console.log("store.getters >>>>>>>>>>>>>>>>>>");
   console.log(store.getters.getToken);
 
   await axios.post("/api/login", form).then((response) => {
-    if (response.data.success) {
+    console.log(">>>>>>>>>>>response", response.data.message);
+    if (response.data.success === true) {
       localStorage.setItem("token", response.data.data.token);
       store.dispatch("auth/setToken", response.data.data.token);
       message.value = response.data.message;
 
+      loading.value = false;
+
       setTimeout(() => {
-        router.push("/dashboard");
+        router.push({
+          path: "/dashboard",
+        });
       }, 1000);
-    } else {
+    } else if (response.data.success === false) {
+      console.log("action failed");
       error.value = response.data.message;
+      loading.value = false;
     }
   });
 };
@@ -41,7 +50,7 @@ const login = async () => {
   <div class="pt-10 flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
     <div class="sm:mx-auto sm:w-full sm:max-w-sm">
       <img
-        class="h-10 w-[500px] h-[250px] hover:transform hover:-translate-y-2 transition duration-300"
+        class="h-10 w-[500px] h-[250px] hover:transform hover:-translate-y-2 transition ease-in duration-300"
         src="../../../assets/logo.png"
         alt="Your Company"
       />
@@ -61,7 +70,7 @@ const login = async () => {
       class="sm:mx-auto sm:w-full sm:max-w-sm flex items-center justify-between mt-10 p-3 rounded-md bg-red-100 gap-4"
       role="alert"
     >
-      <div>{{ error }}</div>
+      <div class="text-sm text-slate-900 justify-center">{{ error }}</div>
     </div>
 
     <div
@@ -118,8 +127,9 @@ const login = async () => {
           <button
             type="submit"
             class="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+            :class="loading ? 'disabled bg-indigo-500   ' : ''"
           >
-            Login
+            {{ loading ? "Loading ...." : "Login" }}
           </button>
         </div>
       </form>

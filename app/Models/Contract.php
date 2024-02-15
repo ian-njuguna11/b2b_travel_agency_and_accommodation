@@ -21,4 +21,19 @@ class Contract extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function getMapping()
+    {
+        return [
+            'id' => $this->id,
+            'contract_rates' => $this->contract_rates,
+            'start_date' => $this->start_date,
+            'end_date' => $this->end_date,
+            'accommodation_id' => $this->accommodation_id,
+            'travel_agent_id' => $this->travel_agent_id ,
+            'travel_agent_email' => $this->travelAgent->email ,
+            'accommodation_name' => $this->accommodation->name,
+            'travel_agent' => $this->travelAgent
+        ];
+    }
+
 }

@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router';
 import { createStore } from 'vuex';
 
 import accommodations from '../components/pages/accommodations.vue';
+import bookings from '../components/pages/bookings.vue';
 import contracts from '../components/pages/contracts.vue';
 import dashboard from '../components/pages/dashboard.vue';
 import login from '../components/pages/login.vue';
@@ -70,6 +71,14 @@ const routes = [
         meta: {
             requiresAuth: true
         }
+    }, {
+            path: '/bookings',
+        name: 'Bookings',
+        component: bookings,
+        meta: {
+            requiresAuth: true
+        }
+
     },
     //notfound
     {
@@ -77,7 +86,7 @@ const routes = [
         name: 'NotFound',
         component: notFound,
         meta: {
-            requiresAuth: true
+            requiresAuth: false
         }
     }
 ]

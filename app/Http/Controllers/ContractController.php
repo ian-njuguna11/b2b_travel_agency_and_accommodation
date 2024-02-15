@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Contract;
 use Illuminate\Http\Request;
+use stdClass;
 
 class ContractController extends Controller
 {
@@ -12,7 +13,9 @@ class ContractController extends Controller
      */
     public function index(Contract $contract)
     {
-        $contracts = $contract->all();
+        $contracts = $contract->all()->map(function($value)  {
+            return $value->getMapping();
+        });
         return response()->json([
             'success' => true,
             'data'  => $contracts
@@ -40,6 +43,9 @@ class ContractController extends Controller
             'accommodation_id',
             'travel_agent_id'
         ]);
+
+        $contract['accommodation_id'] = 1;
+        $contract['travel_agent_id'] = 2;
 
 
         Contract::create($contract);

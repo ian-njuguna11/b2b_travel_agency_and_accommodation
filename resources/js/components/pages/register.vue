@@ -31,7 +31,7 @@ const register = async () => {
   <div class="pt-10 flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
     <div class="sm:mx-auto sm:w-full sm:max-w-sm">
       <img
-        class="mx-auto h-10 w-[500px] h-[250px]"
+        class="mx-auto h-10 w-[500px] h-[250px] transform scale-x-[-1] hover:transform hover:-translate-y-2 transition ease-in duration-300"
         src="../../../assets/logo.png"
         alt="Your Company"
       />

@@ -13,9 +13,13 @@
 
     <!-- MDI Icons -->
     <link rel="stylesheet" href="https://cdn.materialdesignicons.com/6.5.95/css/materialdesignicons.min.css" />
+
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
 
     @vite(['resources/js/app.js', 'resources/css/app.css'])
+
+
 </head>
 
 <body>
